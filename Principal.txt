@@ -1,0 +1,189 @@
+= Jogo da Velha
+
+JogoDaVelhaCSharp
+
+Claro! Aqui está um exemplo de código em C# que emula o jogo da velha:
+
+```
+using System;
+
+namespace JogoDaVelha
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char[,] tabuleiro = new char[3, 3] { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
+            int jogadas = 0;
+            int jogador = 2;
+            int linha, coluna;
+            bool jogadaValida = false;
+
+            while (jogadas < 9)
+            {
+                Console.Clear();
+                Console.WriteLine("JOGO DA VELHA\n");
+
+                // Desenha o tabuleiro
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.WriteLine(" {0} | {1} | {2} ", tabuleiro[i, 0], tabuleiro[i, 1], tabuleiro[i, 2]);
+                    if (i < 2)
+                        Console.WriteLine("---|---|---");
+                }
+
+                // Verifica se houve vencedor
+                if (tabuleiro[0, 0] == tabuleiro[0, 1] && tabuleiro[0, 1] == tabuleiro[0, 2] ||
+                    tabuleiro[1, 0] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[1, 2] ||
+                    tabuleiro[2, 0] == tabuleiro[2, 1] && tabuleiro[2, 1] == tabuleiro[2, 2] ||
+                    tabuleiro[0, 0] == tabuleiro[1, 0] && tabuleiro[1, 0] == tabuleiro[2, 0] ||
+                    tabuleiro[0, 1] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 1] ||
+                    tabuleiro[0, 2] == tabuleiro[1, 2] && tabuleiro[1, 2] == tabuleiro[2, 2] ||
+                    tabuleiro[0, 0] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 2] ||
+                    tabuleiro[0, 2] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 0])
+                {
+                    Console.WriteLine("\nParabéns! Jogador {0} venceu!", jogador == 1 ? 'O' : 'X');
+                    break;
+                }
+
+                // Verifica se deu empate
+                if (jogadas == 8)
+                {
+                    Console.WriteLine("\nDeu empate!");
+                    break;
+                }
+
+                // Lê a jogada do jogador
+                do
+                {
+                    Console.Write("\nJogador {0}, digite a posição desejada (1-9): ", jogador);
+                    int posicao = int.Parse(Console.ReadLine());
+
+                    linha = (posicao - 1) / 3;
+                    coluna = (posicao - 1) % 3;
+
+                    if (tabuleiro[linha, coluna] != 'X' && tabuleiro[linha, coluna] != 'O')
+                    {
+                        jogadaValida = true;
+                        tabuleiro[linha, coluna] = jogador == 1 ? 'O' : 'X';
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nJogada inválida! Tente novamente.");
+                        jogadaValida = false;
+                    }
+                } while (!jogadaValida);
+
+                // Alterna o jogador
+                jogador = jogador == 1 ? 2 : 1;
+                jogadas++;
+            }
+
+            Console.WriteLine("\nPressione qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+    }
+}
+```
+
+Esse código utiliza uma matriz de caracteres para representar o tabuleiro do jogo. Ele também verifica se houve um vencedor ou empate após cada jogada. Para jogar,
+
+=
+
+A melhor maneira de dividir o código em funções menores é criar funções que realizem tarefas específicas e que possam ser reutilizadas em outras partes do código. Isso torna o código mais fácil de entender e manter. Aqui estão algumas dicas para dividir o código em funções menores:
+
+1. Identifique as tarefas que o código precisa realizar e agrupe-as em funções lógicas.
+2. Cada função deve ter um nome descritivo que reflita sua finalidade.
+3. As funções devem ser pequenas e focadas em uma única tarefa.
+4. As funções devem ser independentes e não devem depender de variáveis globais.
+5. As funções devem ser testáveis e ter uma entrada e saída bem definidas.
+
+Aqui está um exemplo de como você pode dividir o código do jogo da velha em funções menores:
+
+```
+using System;
+
+namespace JogoDaVelha
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            char[,] tabuleiro = new char[3, 3] { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
+            int jogadas = 0;
+            int jogador = 2;
+            int linha, coluna;
+            bool jogadaValida = false;
+
+            while (jogadas < 9)
+            {
+                Console.Clear();
+                Console.WriteLine("JOGO DA VELHA\n");
+
+                DesenhaTabuleiro(tabuleiro);
+
+                if (VerificaVencedor(tabuleiro, jogador))
+                {
+                    Console.WriteLine("\nParabéns! Jogador {0} venceu!", jogador == 1 ? 'O' : 'X');
+                    break;
+                }
+
+                if (VerificaEmpate(jogadas))
+                {
+                    Console.WriteLine("\nDeu empate!");
+                    break;
+                }
+
+                jogadaValida = LeJogada(jogador, tabuleiro, out linha, out coluna);
+
+                if (jogadaValida)
+                {
+                    tabuleiro[linha, coluna] = jogador == 1 ? 'O' : 'X';
+                    jogador = jogador == 1 ? 2 : 1;
+                    jogadas++;
+                }
+                else
+                {
+                    Console.WriteLine("\nJogada inválida! Tente novamente.");
+                }
+            }
+
+            Console.WriteLine("\nPressione qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+
+        static void DesenhaTabuleiro(char[,] tabuleiro)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine(" {0} | {1} | {2} ", tabuleiro[i, 0], tabuleiro[i, 1], tabuleiro[i, 2]);
+                if (i < 2)
+                    Console.WriteLine("---|---|---");
+            }
+        }
+
+        static bool VerificaVencedor(char[,] tabuleiro, int jogador)
+        {
+            if (tabuleiro[0, 0] == tabuleiro[0, 1] && tabuleiro[0, 1] == tabuleiro[0, 2] ||
+                tabuleiro[1, 0] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[1, 2] ||
+                tabuleiro[2, 0] == tabuleiro[2, 1] && tabuleiro[2, 1] == tabuleiro[2, 2] ||
+                tabuleiro[0, 0] == tabuleiro[1, 0] && tabuleiro[1, 0] == tabuleiro[2, 0] ||
+                tabuleiro[0, 1] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 1] ||
+                tabuleiro[0, 2] == tabuleiro[1, 2] && tabuleiro[1, 2] == tabuleiro[2, 2] ||
+                tabuleiro[0, 0] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 2] ||
+                tabuleiro[0, 2] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 0])
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        static bool VerificaEmpate(int jogadas)
+        {
+
+Origem: conversa com o Bing, 18/01/2024
+(1) Funções em C# | Caffeine Algorithm. https://caffeinealgorithm.com/blog/funcoes-em-csharp.
+(2) Definir o menor e o maior valor dentre três números. https://pt.stackoverflow.com/questions/496656/definir-o-menor-e-o-maior-valor-dentre-tr%C3%AAs-n%C3%BAmeros.
+(3) Fatiamento de array em C# | Delft Stack. https://www.delftstack.com/pt/howto/csharp/array-slicing-in-csharp/.
+(4) funções - Uma função grande ou muitas pequenas? - Stack Overflow em .... https://pt.stackoverflow.com/questions/30772/uma-fun%c3%a7%c3%a3o-grande-ou-muitas-pequenas.
