@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoDaVelhaCSharp", "JogoDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoDaVelhaCSharpTests", "..\..\test\JogoDaVelhaCSharpTests\JogoDaVelhaCSharpTests.csproj", "{E73D8501-7DA4-44C3-B9E1-523B63F9F388}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arquivos", "Arquivos", "{D6919544-0CB5-477F-94FA-01B98B93AC92}"
+	ProjectSection(SolutionItems) = preProject
+		Principal.txt = Principal.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
