@@ -2,15 +2,14 @@
 {
     public class Jogo
     {
-        public void Jogada()
+        public static void Jogada()
         {
-            Console.WriteLine("Chegou no programa correto!");
+            Console.WriteLine("Jogo da #");
 
             char[,] tabuleiro = new char[3, 3] { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
             int jogadas = 0;
             int jogador = 2;
             int linha, coluna;
-            bool jogadaValida = false;
 
             while (jogadas < 9)
             {
@@ -46,11 +45,12 @@
                     break;
                 }
 
+                bool jogadaValida;
                 // Lê a jogada do jogador
                 do
                 {
                     Console.Write("\nJogador {0}, digite a posição desejada (1-9): ", jogador);
-                    int posicao = int.Parse(Console.ReadLine());
+                    int posicao = int.Parse(Console.ReadLine());                                          
 
                     linha = (posicao - 1) / 3;
                     coluna = (posicao - 1) % 3;
@@ -65,6 +65,7 @@
                         Console.WriteLine("\nJogada inválida! Tente novamente.");
                         jogadaValida = false;
                     }
+
                 } while (!jogadaValida);
 
                 // Alterna o jogador
