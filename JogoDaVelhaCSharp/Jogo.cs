@@ -53,7 +53,7 @@
             }
         }
 
-        private static bool VerificarVencedor(char[,] tabuleiro, int jogador)
+        public static bool VerificarVencedor(char[,] tabuleiro, int jogador)
         {
             return tabuleiro[0, 0] == tabuleiro[0, 1] && tabuleiro[0, 1] == tabuleiro[0, 2] ||
                    tabuleiro[1, 0] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[1, 2] ||
