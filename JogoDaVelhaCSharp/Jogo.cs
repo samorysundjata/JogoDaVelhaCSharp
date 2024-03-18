@@ -40,9 +40,9 @@
             return new char[3, 3] { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
         }
 
-        private static void MostrarTabuleiro(char[,] tabuleiro)
+        public static void MostrarTabuleiro(char[,] tabuleiro)
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("JOGO DA VELHA C#\n");
 
             for (int i = 0; i < 3; i++)
