@@ -6,6 +6,8 @@
         {
             Console.WriteLine("Jogo da #");
 
+
+
             char[,] tabuleiro = InicializarTabuleiro();
             int jogadas = 0;
             int jogador = 2;
@@ -13,6 +15,7 @@
 
             while (jogadas < 9)
             {
+                Console.Clear();
                 MostrarTabuleiro(tabuleiro);
 
                 if (VerificarVencedor(tabuleiro, jogador))
@@ -65,7 +68,7 @@
                    tabuleiro[0, 2] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 0];
         }
 
-        private static void Jogar(char[,] tabuleiro, ref int jogador, out int linha, out int coluna)
+        public static void Jogar(char[,] tabuleiro, ref int jogador, out int linha, out int coluna)
         {
             bool jogadaValida;
             do
