@@ -68,7 +68,7 @@
                    tabuleiro[0, 2] == tabuleiro[1, 1] && tabuleiro[1, 1] == tabuleiro[2, 0];
         }
 
-        public static void Jogar(char[,] tabuleiro, ref int jogador, out int linha, out int coluna)
+        private static void Jogar(char[,] tabuleiro, ref int jogador, out int linha, out int coluna)
         {
             bool jogadaValida;
             do
