@@ -1,6 +1,6 @@
 ﻿namespace JogoDaVelhaCSharp
 {
-    public class Jogo
+    public static class Jogo
     {
         public static void Jogada()
         {
